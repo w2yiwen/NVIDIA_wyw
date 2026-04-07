@@ -1,0 +1,40 @@
+# AutoDL：大权重与缓存放在数据盘；你当前卡 ~96GB 显存，可按需改 batch / grad_accum。
+# 使用：./scripts/run_full_autodl.sh  或
+#   NEMOTRON_WORKSPACE=/root/workspace PYTHONPATH=/root/workspace python -m src.train --config configs/autodl.yaml
+
+paths:
+  # 固定权重与 Hub 缓存目录（HF + Kaggle 模型都会落在这里）
+  weights_disk_root: "/root/autodl-tmp/.autodl"
+
+model:
+  kaggle_model_id: "metric/nemotron-3-nano-30b-a3b-bf16/transformers/default"
+  # 若已手动下载到数据盘，可改为绝对路径并注释掉 kaggle 下载逻辑依赖
+  local_path: null
+  local_smoke_model: null
+
+data:
+  train_csv: "data/train.csv"
+  subsample_size: null
+
+training:
+  # 输出也在数据盘，避免系统盘占满
+  output_dir: "/root/autodl-tmp/.autodl/runs/nemotron_lora/adapter"
+  lora_rank: 32
+  lora_alpha: 32
+  lora_dropout: 0.05
+  max_seq_len: 2048
+  num_epochs: 2
+  # 96GB 可尝试 batch_size: 2；若 OOM 改回 1
+  batch_size: 1
+  grad_accum: 4
+  learning_rate: 1.0e-4
+  warmup_ratio: 0.1
+  max_grad_norm: 1.0
+  logging_steps: 10
+  save_strategy: "no"
+
+submission:
+  zip_path: "/root/autodl-tmp/.autodl/runs/nemotron_lora/submission.zip"
+  required_in_zip:
+    - adapter_config.json
+    - adapter_model.safetensors

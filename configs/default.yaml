@@ -1,0 +1,34 @@
+# Default training config — LoRA rank must stay ≤ 32 for this competition.
+
+model:
+  # Kaggle Hub id (default). Override with local path via CLI --model_path.
+  kaggle_model_id: "metric/nemotron-3-nano-30b-a3b-bf16/transformers/default"
+  # Optional: tiny HF model dir for `python -m src.validate_setup` (full pipeline smoke test).
+  local_smoke_model: null
+
+data:
+  train_csv: "data/train.csv"
+  # Optional columns: generated_cot, cot, reasoning — used as assistant reasoning if present
+  subsample_size: null  # null = use full train.csv
+
+training:
+  output_dir: "outputs/adapter"
+  lora_rank: 32
+  lora_alpha: 32
+  lora_dropout: 0.05
+  max_seq_len: 2048
+  num_epochs: 2
+  batch_size: 1
+  grad_accum: 4
+  learning_rate: 1.0e-4
+  warmup_ratio: 0.1
+  max_grad_norm: 1.0
+  logging_steps: 5
+  save_strategy: "no"  # set "epoch" if you want checkpoints on disk
+
+submission:
+  zip_path: "outputs/submission.zip"
+  # Only these are required by typical eval; tokenizer files are still useful for reproducibility.
+  required_in_zip:
+    - adapter_config.json
+    - adapter_model.safetensors

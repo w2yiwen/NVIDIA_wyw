@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+.env
+*.egg-info/
+.pytest_cache/
+
+# Training artifacts (large)
+outputs/*
+!outputs/.gitkeep
+*.safetensors
+submission.zip
+*.zip

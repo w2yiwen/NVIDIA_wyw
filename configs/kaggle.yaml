@@ -1,0 +1,35 @@
+# Kaggle GPU Notebook：缓存与输出放在 /kaggle/working，避免系统盘爆满。
+# 竞赛数据路径（Join 竞赛后 Data 标签下的目录名一致即可）。
+
+paths:
+  weights_disk_root: "/kaggle/working/cache"
+
+model:
+  kaggle_model_id: "metric/nemotron-3-nano-30b-a3b-bf16/transformers/default"
+  local_path: null
+  local_smoke_model: null
+
+data:
+  train_csv: "/kaggle/input/nvidia-nemotron-model-reasoning-challenge/train.csv"
+  subsample_size: null
+
+training:
+  output_dir: "/kaggle/working/adapter"
+  lora_rank: 32
+  lora_alpha: 32
+  lora_dropout: 0.05
+  max_seq_len: 2048
+  num_epochs: 2
+  batch_size: 1
+  grad_accum: 4
+  learning_rate: 1.0e-4
+  warmup_ratio: 0.1
+  max_grad_norm: 1.0
+  logging_steps: 5
+  save_strategy: "no"
+
+submission:
+  zip_path: "/kaggle/working/submission.zip"
+  required_in_zip:
+    - adapter_config.json
+    - adapter_model.safetensors

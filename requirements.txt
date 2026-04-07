@@ -1,0 +1,14 @@
+# Nemotron reasoning challenge — install on Kaggle or a CUDA machine.
+# Pin versions locally to match your runtime if you need strict reproducibility.
+
+torch>=2.4.0
+transformers>=4.46.0
+peft>=0.13.0
+trl>=0.12.0
+datasets>=3.0.0
+accelerate>=1.0.0
+safetensors>=0.4.0
+polars>=1.0.0
+pandas>=2.0.0
+pyyaml>=6.0.0
+kagglehub>=0.3.0
