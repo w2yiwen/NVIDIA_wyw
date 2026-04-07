@@ -41,3 +41,22 @@ git clone https://github.com/w2yiwen/NVIDIA_wyw.git
 cd NVIDIA_wyw
 pip install -r requirements.txt
 ```
+
+## 推送到你的 GitHub
+
+本环境未配置你的账号，请在**本机**执行：
+
+```bash
+cd /path/to/NVIDIA_wyw
+git remote set-url origin https://github.com/w2yiwen/NVIDIA_wyw.git  # 若尚未关联
+git push -u origin main
+```
+
+或使用 SSH：`git remote set-url origin git@github.com:w2yiwen/NVIDIA_wyw.git`
+
+## 快速校验（本地）
+
+```bash
+export NEMOTRON_WORKSPACE="$(pwd)" PYTHONPATH="$(pwd)"
+python -m src.validate_setup --skip_torch
+```
